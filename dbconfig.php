@@ -1,13 +1,12 @@
 <?php
-// Database configuration
-$dbHost     = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName     = "url";
+$servername = "localhost";
+$username = "root"; // MY MySQL username
+$password = ""; // MY MySQL password
+$dbname = "url";
 
-// Create database connection
-try{
-    $db = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUsername, $dbPassword);
-}catch(PDOException $e){
-    echo "Connection failed: " . $e->getMessage();
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+?>

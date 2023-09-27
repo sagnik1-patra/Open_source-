@@ -1,17 +1,29 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $url = $_POST['url'];
+include 'config.php';
 
-    // Generate a unique code (you can use a library or algorithm for this)
-    $code = generateUniqueCode();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $original_url = $_POST["url"];
+    $shortened_url = generateUniqueCode();
 
-    // Save the URL and code to a database or file (for simplicity, we'll use a file)
-    file_put_contents('urls.txt', "$code,$url\n", FILE_APPEND);
+    $sql = "INSERT INTO url_mappings (short_code, original_url) VALUES ('$shortened_url', '$original_url')";
 
-    // Return the shortened URL
-    $shortened_url = "http://example.com/$code";
-    echo "Shortened URL: <a href=\"$shortened_url\">$shortened_url</a>";
-} else {
-    header('Location: index.php');
+    if ($conn->query($sql) === TRUE) {
+        echo "Shortened URL: http://short.url/{$shortened_url}";
+    } else {
+        echo "Error: " . $conn->error;
+    }
+
+    $conn->close();
+}
+
+function generateUniqueCode($length = 6) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $code = '';
+
+    for ($i = 0; $i < $length; $i++) {
+        $code .= $characters[rand(0, strlen($characters) - 1)];
+    }
+
+    return $code;
 }
 ?>

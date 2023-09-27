@@ -1,16 +1,18 @@
 <?php
-$code = $_GET['code'];
+include 'config.php';
 
-// Read the URLs from the file and find the corresponding URL for the code
-$lines = file('urls.txt');
-foreach ($lines as $line) {
-    list($saved_code, $url) = explode(',', trim($line));
-    if ($saved_code === $code) {
-        header("Location: $url");
-        exit();
-    }
+$short_code = $_GET['code'];
+
+$sql = "SELECT original_url FROM url_mappings WHERE short_code='$short_code'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $original_url = $row["original_url"];
+    header("Location: $original_url");
+} else {
+    echo "Short URL not found!";
 }
 
-// If code not found, redirect to homepage
-header('Location: index.php');
+$conn->close();
 ?>
