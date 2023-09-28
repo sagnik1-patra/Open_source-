@@ -1,2 +1,10 @@
-RewriteEngine On
-RewriteRule ^([a-zA-Z0-9]+)$ redirect.php?code=$1 [L]
+# RewriteEngine On
+# RewriteRule ^([a-zA-Z0-9]+)$ redirect.php?code=$1 [L]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /url_shortener/
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([^/]+)$ redirect.php?code=$1 [QSA,L]
+</IfModule>
