@@ -6,7 +6,7 @@ A simple URL shortening service implemented in PHP.
 
 1. Clone the repository.
 2. Create a MySQL database and import `urls` to create the necessary table.
-3. Update `dbconfig.php` with your database credentials.
+3. Updated `dbconfig.php` with my database credentials.
 4. Deploy the PHP files on a server with PHP and MySQL support.
 
 ## Usage
