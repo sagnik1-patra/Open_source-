@@ -1,9 +1,9 @@
 <?php
-include 'config.php';
+include 'dbconfig.php';
 
 $short_code = $_GET['code'];
 
-$sql = "SELECT original_url FROM url_mappings WHERE short_code='$short_code'";
+$sql = "SELECT original_url FROM urls WHERE short_code='$shortened_url'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

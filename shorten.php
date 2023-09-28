@@ -1,11 +1,11 @@
 <?php
-include 'config.php';
+include 'dbconfig.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $original_url = $_POST["url"];
     $shortened_url = generateUniqueCode();
 
-    $sql = "INSERT INTO url_mappings (short_code, original_url) VALUES ('$shortened_url', '$original_url')";
+    $sql = "INSERT INTO urls (short_code, original_url) VALUES ('$shortened_url', '$original_url')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Shortened URL: http://short.url/{$shortened_url}";
@@ -16,7 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 
-function generateUniqueCode($length = 6) {
+function generateUniqueCode() {
+    $length = 6;
+
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $code = '';
 
@@ -26,4 +28,5 @@ function generateUniqueCode($length = 6) {
 
     return $code;
 }
+
 ?>
